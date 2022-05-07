@@ -9,3 +9,9 @@ wget -N https://raw.githubusercontents.com/Misaka-blog/Hysteria-script/master/hy
 ```
 
 快捷方式 `bash hysteria.sh`
+
+## 参考资料
+
+Hysteria：https://github.com/HyNetwork/hysteria
+
+YouTube 不良林：https://www.youtube.com/watch?v=pMe_oErfLWQ
