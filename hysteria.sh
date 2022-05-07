@@ -206,6 +206,8 @@ installHysteria() {
         red "Hysteria 服务器安装失败"
     elif [[ -n $(service hysteria status 2>/dev/null | grep "active") ]]; then
         green "Hysteria 服务器安装成功"
+        yellow "服务器配置文件已保存到 /root/Hysteria/server.json"
+        yellow "客户端配置文件已保存到 /root/Hysteria/client.json"
     fi
 }
 
