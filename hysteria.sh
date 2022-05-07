@@ -127,6 +127,8 @@ EOF
 {
     "server": "$IP:$PORT",
     "obfs": "password",
+    "up_mbps": 20,
+    "down_mbps": 100,
     "insecure": true,
     "socks5": {
         "listen": "127.0.0.1:1080"
