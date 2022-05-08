@@ -102,7 +102,7 @@ downloadHysteria() {
         exit 1
     fi
     yellow "检测到 Hysteria 最新版本：${last_version}，开始安装"
-    wget -N --no-check-certificate https://github.com/HyNetwork/Hysteria/releases/download/${last_version}/Hysteria-tun-linux-$(archAffix) -O /usr/bin/hysteria
+    wget -N --no-check-certificate https://fast.imkcp666.workers.dev/https://github.com/HyNetwork/Hysteria/releases/download/${last_version}/Hysteria-tun-linux-$(archAffix) -O /usr/bin/hysteria
     if [[ $? -ne 0 ]]; then
         red "下载 Hysteria 失败，请确保你的服务器能够连接并下载 Github 的文件"
         exit 1
@@ -115,6 +115,14 @@ makeConfig() {
     [[ -z $PORT ]] && PORT=40000
     read -p "请输入 Hysteria 的连接混淆密码（默认随机生成）：" OBFS
     [[ -z $OBFS ]] && OBFS=$(date +%s%N | md5sum | cut -c 1-32)
+    read -p "请输入Hysteria 机器的上传速度（默认50m）：" UPVPS
+    [[ -z $UPVPS ]] && UPVPS=50
+    read -p "请输入Hysteria 机器的下载速度（默认100m）：" DNVPS
+    [[ -z $DNVPS ]] && DNVPS=100
+    read -p "请输入自己本地的上传速度（默认100m）：" UP
+    [[ -z $UP ]] && UP=100
+    read -p "请输入Hysteria 机器的下载速度（默认100m）：" DOWN
+    [[ -z $DOWN ]] && DOWN=100
     openssl ecparam -genkey -name prime256v1 -out /root/Hysteria/private.key
     openssl req -new -x509 -days 36500 -key /root/Hysteria/private.key -out /root/Hysteria/cert.crt -subj "/CN=www.bilibili.com"
     cat <<EOF > /root/Hysteria/server.json
@@ -123,14 +131,17 @@ makeConfig() {
     "cert": "/root/Hysteria/cert.crt",
     "key": "/root/Hysteria/private.key",
     "obfs": "$OBFS"
+    "up_mbps": UPVPS,
+    "down_mbps": DNVPS
+
 }
 EOF
     cat <<EOF > /root/Hysteria/client.json
 {
     "server": "$IP:$PORT",
     "obfs": "$OBFS",
-    "up_mbps": 20,
-    "down_mbps": 100,
+    "up_mbps": "$UP" ,
+    "down_mbps": "$DOWN",
     "insecure": true,
     "socks5": {
         "listen": "127.0.0.1:1080"
