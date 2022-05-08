@@ -121,7 +121,7 @@ makeConfig() {
     [[ -z $DNVPS ]] && DNVPS=100
     read -p "请输入自己本地的上传速度（默认100m）：" UP
     [[ -z $UP ]] && UP=100
-    read -p "请输入Hysteria 机器的下载速度（默认100m）：" DOWN
+    read -p "请输入自己本地的下载速度（默认100m）：" DOWN
     [[ -z $DOWN ]] && DOWN=100
     openssl ecparam -genkey -name prime256v1 -out /root/Hysteria/private.key
     openssl req -new -x509 -days 36500 -key /root/Hysteria/private.key -out /root/Hysteria/cert.crt -subj "/CN=www.bilibili.com"
